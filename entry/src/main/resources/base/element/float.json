@@ -1,8 +1,12 @@
 {
   "float": [
     {
-      "name": "page_text_font_size",
-      "value": "50fp"
+      "name": "Index_Title_font_size",
+      "value": "45fp"
+    },
+    {
+      "name": "Index_entry_font_size",
+      "value": "35fp"
     }
   ]
 }
