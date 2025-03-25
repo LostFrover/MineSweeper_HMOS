@@ -1,3 +1,13 @@
+@Builder
+export function PageOneBuilder(name: string) {
+  NavDestination() {
+    Text(`${name}`)
+    // Text(`${param.toString()}`)
+      .fontColor(Color.Orange)
+
+  }
+}
+
 //块数据类
 class Block {
   public mined: boolean = false;
