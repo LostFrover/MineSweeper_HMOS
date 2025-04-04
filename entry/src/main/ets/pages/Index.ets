@@ -28,6 +28,9 @@ struct Index {
           .fontWeight(FontWeight.Bold)
         Button('初级')
           .onClick(() => {
+            this.pa.row = 9;
+            this.pa.col = 9;
+            this.pa.mines = 10;
             this.nav.pushPath({ name: 'GamePage', param: this.pa })
           })
         Button('中级')

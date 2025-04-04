@@ -1,56 +1,62 @@
-@Builder
-export function PageOneBuilder(name: string) {
-  NavDestination() {
-    Text(`${name}`)
-    // Text(`${param.toString()}`)
-      .fontColor(Color.Orange)
+import { game_para } from 'ets/pages/Index'
 
-  }
+interface block {
+  row: number
+  col: number
+  isOpen: boolean
+  mined: boolean
+  mineCount: number
 }
 
-//块数据类
-class Block {
-  public mined: boolean = false;
-  public isOpen: boolean = false;
-  public mineCount: number | null = null;
-  row: number;
-  col: number;
-
-  constructor(row: number, col: number) {
-    this.row = row;
-    this.col = col;
-  }
-
-  public open() {
-    this.isOpen = true;
-    if (this.mined) {
-      end_game()
+function initial_block_array(row: number, col: number): Array<block> {
+  let tmp: block[] = []
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < col; j++) {
+      tmp.push({
+        row: i,
+        col: j,
+        isOpen: false,
+        mined: false,
+        mineCount: 0
+      })
     }
   }
+  return tmp
 }
 
-function end_game() {
+@Builder
+export function GamePageBuilder(name: string, param: game_para) {
+  NavDestination() {
+    Text(`${name}`)
+    Text(`${param.row.toString() + param.col.toString() + param.mines.toString() + param.mode.toString()}`)
+      .fontColor(Color.Orange)
 
+    GamePage({
+      row: param.row,
+      col: param.col,
+      mines: param.mines,
+      mode: param.mode,
+      block_array: initial_block_array(param.row, param.col)
+    })
+  }
 }
-
-let block_0: Block = new Block(0, 0)
 
 // 游戏运行页面
-@Entry
 @Component
 export struct GamePage {
-  @Consume('nav') nav: NavPathStack;
+  @State @Watch('endGame') started: number = -1;
   @State counter: number = 0;
-  @State row: number = 0;
-  @State col: number = 0;
-  @State mines: number = 0;
-  @State mode: boolean = false;
+  @Prop row: number
+  @Prop col: number
+  @Prop mines: number
+  @Prop mode: boolean
+  @State block_array: Array<block> = []
 
-  aboutToAppear(): void {
-    this.row = Number(this.nav.getParamByName('row'))
-    this.col = Number(this.nav.getParamByName('col'))
-    this.mines = Number(this.nav.getParamByName('mines'))
-    this.mode = Boolean(this.nav.getParamByName('mode'))
+  endGame(): void {
+    if (this.started) {
+      return
+    }
+    this.enabled(false)
   }
 
   build() {
@@ -62,27 +68,35 @@ export struct GamePage {
           .fontSize($r("app.float.Index_Title_font_size"))
           .fontWeight(FontWeight.Bold)
         Grid() {
+          ForEach(this.block_array, (one: block) => {
+            MineBlock({ started: this.started, block: one }).width(`${95/this.col}%`)
+          })
+        }.backgroundColor(Color.Gray).layoutWeight(1)
+        .maxCount(this.col)
 
-        }
-
+      }
+    }
   }
-}
-}
 }
 
 
 //自订块组件
 @Component
 struct MineBlock {
-  @State row: number = 0;
-  @State col: number = 0;
-  @State block: Block = block_0;
+  @Link started: number
+  @State block: block = {
+    row: 0,
+    col: 0,
+    isOpen: false,
+    mined: false,
+    mineCount: 0
+  }
 
   build() {
     Button({ type: ButtonType.ROUNDED_RECTANGLE }) {
       // 状态显示
       if (!this.block.isOpen) {
-        Text('')
+        Text(' ')
           .foregroundColor(Color.Blue)
       } else if (this.block.mined) {
         Text('*')
@@ -92,8 +106,12 @@ struct MineBlock {
           .foregroundColor(Color.Pink)
       }
     }
+    .layoutWeight(1)
     .onClick(() => {
-      this.block.open()
+      if(this.started<0){
+
+      }
+
     })
 
   }

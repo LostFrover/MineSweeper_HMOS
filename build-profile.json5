@@ -1,25 +1,10 @@
 {
   "app": {
-    "signingConfigs": [
-      {
-        "name": "default",
-        "type": "HarmonyOS",
-        "material": {
-          "certpath": "C:\\Users\\34753\\.ohos\\config\\default_MineSweeper_HMOS_BPpyK8q8eKRLSyBejtTIxaFP-Wfu6lQT7S5wYC44hkA=.cer",
-          "keyAlias": "debugKey",
-          "keyPassword": "0000001B2EA01E5B61A52BCABB50411E19F385CE80E48D4D5F5AE10583CB4007B10231279A383CD3857995",
-          "profile": "C:\\Users\\34753\\.ohos\\config\\default_MineSweeper_HMOS_BPpyK8q8eKRLSyBejtTIxaFP-Wfu6lQT7S5wYC44hkA=.p7b",
-          "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\34753\\.ohos\\config\\default_MineSweeper_HMOS_BPpyK8q8eKRLSyBejtTIxaFP-Wfu6lQT7S5wYC44hkA=.p12",
-          "storePassword": "0000001BE7F2829179F5B8D3E1230B7F7541BE2BFA3106EBB00A7688779574D14C85351F69CEADD935072C"
-        }
-      }
-    ],
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.3(15)",
+        "compatibleSdkVersion": "5.0.4(16)",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {
